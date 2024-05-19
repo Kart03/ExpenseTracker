@@ -8,14 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var vm = LogListVM()
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+//        #if os(macOS)
+//        splitView
+//        #elseif os(visionOS)
+//        tabview
+//        #else
+//        switch horizontalSizeClass {
+//            case .compact: tabview
+//            default: splitView
+//        }
+//        #endif
+        
+        NavigationStack {
+            LogListContainerV(vm: $vm)
         }
-        .padding()
+    }
+    
+    
+    
+    var tabview: some View {
+        TabView {
+            NavigationStack {
+                LogListContainerV(vm: $vm)
+            }
+            .tabItem {
+                Label("Expenses", systemImage: "tray")
+            }
+        }
+    }
+    
+    var splitView: some View {
+        Text("Split View")
     }
 }
 
